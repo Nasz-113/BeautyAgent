@@ -1,5 +1,5 @@
 sql_create_product_table = """
-CREATE TABLE {}(
+CREATE TABLE IF NOT EXISTS {}(
     product_id_db serial PRIMARY KEY,
     product_id text,
     product_name text,
@@ -31,10 +31,12 @@ CREATE TABLE {}(
 """
 
 sql_create_brand_table = """
-CREATE TABLE {}(
+CREATE TABLE IF NOT EXISTS {}(
     brand_id_db serial PRIMARY KEY,
     brand_id int,
     brand_name text,
+    clean_brand_name text,
     products text[],
+    description text,
     total_products int);
 """

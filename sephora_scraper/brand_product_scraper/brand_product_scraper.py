@@ -25,22 +25,26 @@ def make_request(url: str) -> requests.Response | None:
     Returns:
         Response | None
     """
-    proxy = 'YOUR PROXY'
-    proxies = {"https": proxy}
+    # proxy = 'YOUR PROXY'
+    # proxies = {"https": proxy}
+
+    headers = {
+        'User-Agent': 'PostmanRuntime/7.54.0',
+        'Accept-Language': 'en-MY'
+    }
     num_retries = 3
     success_list = [200, 404]
     for _ in range(num_retries):
         try:
-            resp = requests.get(url, proxies=proxies)
+            resp = requests.get(url, headers=headers) #, proxies=proxies)
             if resp.status_code in success_list:
-                resp.encoding = 'utf-8'
                 return resp  # Return response if successful
         except requests.exceptions.ConnectionError:
             pass
     return None
 
 
-def get_all_brand_names(resp) -> list[str]:
+def get_all_brand_info(resp) -> list[str]:
     """Extracts a list of all brand names from an HTML page.
 
     Args:
@@ -56,54 +60,48 @@ def get_all_brand_names(resp) -> list[str]:
     """
     print('Extracting all brand names from the site...')
 
-    soup = BeautifulSoup(resp.text, 'html.parser')
+    list_data = resp.json()['data']
+    # print(resp.json())
+    brand_list = []
+    for brand in list_data:
+        product_base_url = f'https://www.sephora.my/api/web/v1/variants?filter%5Bbrand%5D={brand['attributes']['slug-url']}&page%5Bnumber%5D=1&page%5Bsize%5D=200'
+        headers = {
+            'User-Agent': 'PostmanRuntime/7.54.0',
+            'Accept-Language': 'en-MY',
+            'x-swa': 'web',
+            'Accept': '*/*',
+            'Connection': 'keep-alive',
+            }
+        num_retries = 3
+        success_list = [200, 404]
+        for _ in range(num_retries):
+            try:
+                product = requests.get(product_base_url, headers=headers) #, proxies=proxies)
+                if product.status_code in success_list:
+                    # print(resp.json()['transformedMeta'])
+                    # hold = input()
+                    continue  # Return response if successful
+            except requests.exceptions.ConnectionError:
+                return None
+        product = product.json()
+        # print(product["transformedData"][0]["id"])
+        product_id = []
+        for product_name in product["transformedData"]:
+            url = product_name["pdpUrl"]
+            start = url.find('/products/') + len('/products/')
+            end = url.find('/v/', start)
+            product_slug = url[start:end]
+            product_id.append(product_slug)
+        # print(product_id)
+        brand_info = BrandInfo(brand_id=brand["id"], brand_name=brand["attributes"]["slug-url"], clean_brand_name=brand["attributes"]["name"], description=brand["attributes"]["description"], total_products=len(product["transformedData"]), products=product_id)
+        # print(brand_info)
+        brand_list.append(brand_info.model_dump())
+    # print(brand_list)
+    # # Remove "/brands/" from the beginning of each link extracted with css-selector
+    # brand_list = [a['href'][7:] for a in soup.select('.css-1d67h5w a[href]')]
 
-    # Remove "/brands/" from the beginning of each link extracted with css-selector
-    brand_list = [a['href'][7:] for a in soup.select('.css-1d67h5w a[href]')]
-
-    print(f'A total of {len(brand_list)} brand names have been collected. Here are the first five: {brand_list[:5]}\n')
+    print(f'A total of {len(brand_list)} brand names have been collected. \nHere are the first five: {brand_list[:5]}\n')
     return brand_list
-
-
-def get_brand_info(brand_name: str, brand_resp) -> dict:
-    """Extracts information about a brand from JSON response using the Pydantic model
-    and returns validated dictionary of brand information.
-
-    Args:
-        brand_name: The name of the brand to retrieve information for
-        brand_resp: Raw JSON response from the API
-
-    Returns:
-        dict: Validated dictionary with four keys containing information about the brand
-
-    Steps:
-        1. Use the Pydantic model to validate and transform the first page of the
-           brand's response into a dictionary
-        2. Check how many total products the brand has and calculate the number of
-           additional pages to retrieve. One brand page contains max 300 products.
-        3. If there are additional pages, iterate over each page and retrieve the list of products
-        4. Append the list of products from each additional page to the original list of products.
-        5. Return the validated dictionary of brand information
-    """
-    # Transform the first page of the brand response into a validated dictionary using Pydantic model
-    brand_info = BrandInfo(**brand_resp.json()).dict()
-
-    # Calculate the number of additional pages to retrieve, based on the number of total products
-    total_products = brand_info['total_products']
-    add_pages = ((total_products // 300) - 1
-                 if total_products % 300 == 0
-                 else total_products // 300)
-
-    # If there are additional pages, go through them and append the list of products to the original list
-    if add_pages > 0:
-        for page in range(2, add_pages + 2):
-            brand_base_url = f'https://www.sephora.com/api/catalog/brands/{brand_name}/seo?&currentPage={page}&pageSize=-1&loc=en-US'
-            resp = make_request(brand_base_url)
-            if resp is not None and resp.status_code == 200:
-                cur_page_products = BrandInfo(**resp.json()).products
-                brand_info['products'].extend(cur_page_products)
-    print('processing')
-    return brand_info
 
 
 def get_product_info(url: str) -> dict | None:
@@ -133,28 +131,57 @@ def get_product_info(url: str) -> dict | None:
     return resp
 
 
-def save_to_csv(all_info: list[dict], table_name: str) -> None:
-    """Saves the passed information to a CSV file in the 'Output' folder.
+def save_to_csv(all_info: list[dict], table_name: str, unique_key: str) -> None:
+    """Saves the passed information to a CSV file in the 'Output' folder,
+    performing an upsert based on a unique tracking column.
 
     Args:
-        all_info: A list of dictionaries, where each dictionary contains
-            information about a brand or product.
-        table_name: The name of the created csv file
+        all_info: A list of dictionaries containing brand/product data.
+        table_name: The name of the created csv file.
+        unique_key: The string name of the primary key/unique ID column 
+                    (e.g., 'brand_id' or 'product_id').
     """
-    # Create a new 'Output' folder if it doesn't exist
     output_path = Path.cwd() / 'Output'
     output_path.mkdir(exist_ok=True)
     csv_path = output_path / f'{table_name}.csv'
 
-    # Write data to the CSV file
-    print(f'Saving information to the "{table_name}.csv" file...')
+    print(f'Upserting information into the "{table_name}.csv" file...')
 
-    with open(csv_path, 'a', encoding='utf-8', newline='') as out_file:
-        dw = csv.DictWriter(out_file, fieldnames=all_info[0].keys())
+    # 1. Read existing records into a dictionary to preserve them
+    existing_records = {}
+    
+    if csv_path.exists():
+        with open(csv_path, 'r', encoding='utf-8') as in_file:
+            reader = csv.DictReader(in_file)
+            for row in reader:
+                # Store by unique_key (e.g., brand_id)
+                # Note: CSV keys read as strings, so we match input data types
+                key_value = row.get(unique_key)
+                if key_value:
+                    existing_records[str(key_value)] = row
+
+    # 2. Layer incoming records on top (this handles the Upsert)
+    for new_row in all_info:
+        # Stringify the lookup key to safely match CSV reading behavior
+        key_value = str(new_row[unique_key])
+        
+        # This will add new records OR completely overwrite existing ones with the new data
+        existing_records[key_value] = new_row
+
+    # 3. Write everything back out fresh
+    final_rows = list(existing_records.values())
+    
+    if not final_rows:
+        print("No data available to save.")
+        return
+
+    # Use 'w' mode to replace the file with the newly updated rows dataset
+    with open(csv_path, 'w', encoding='utf-8', newline='') as out_file:
+        dw = csv.DictWriter(out_file, fieldnames=list(final_rows[0].keys()))
         dw.writeheader()
-        dw.writerows(all_info)
+        dw.writerows(final_rows)
 
-    print(f'Information has been successfully saved to the "{table_name}.csv" file\n')
+    print(f'Information has been successfully upserted into "{table_name}.csv"\n')
 
 
 def save_to_db(all_info: list[dict], create_table_statement: str, table_name: str) -> None:
@@ -187,8 +214,12 @@ def save_to_db(all_info: list[dict], create_table_statement: str, table_name: st
         col_names = ','.join(list(all_info[0].keys()))  # -> 'col_n1,col_n2'
         col_names_2 = ','.join([f'%({key})s' for key in list(all_info[0].keys())])  # -> '%(col_n1)s,%(col_n2)s'
 
+        conflict_columns = ['brand_id'] # Replace this with whatever your PRIMARY KEY column is named
+        update_assignments = [f"{k} = EXCLUDED.{k}" for k in list(all_info[0].keys()) if k not in conflict_columns]
+        update_string = ", ".join(update_assignments)
+
         # Insert data into table
-        query = f"INSERT INTO {table_name} ({col_names}) VALUES ({col_names_2})"
+        query = f"INSERT INTO {table_name} ({col_names}) VALUES ({col_names_2}) ON CONFLICT (brand_id) DO UPDATE SET {update_string}"
         psycopg2.extras.execute_batch(cursor, query, all_info, page_size=1000)
 
     # Close connection to the database
@@ -199,35 +230,27 @@ def save_to_db(all_info: list[dict], create_table_statement: str, table_name: st
 def main():
     # Get all brand names and put them in one list
     try:
-        brand_names = get_all_brand_names(make_request('https://www.sephora.com/brands-list'))
+        brand_list = get_all_brand_info(make_request('https://www.sephora.my/api/v2.6/brands?page[size]=500'))
     except Exception as e:
         sys.exit(f'An error occurred while trying to get a list of brand names: {type(e).__name__} - {e}')
 
-    # Get info about each brand into a dictionary and add it to the list
-    print('Extracting information about brands...')
-    all_brands_info = []
-    for brand_name in brand_names:
-        url = f'https://www.sephora.com/api/catalog/brands/{brand_name}/seo?&currentPage=1&pageSize=-1&loc=en-US'
-        resp = make_request(url)
-        if resp is not None and resp.status_code == 200:
-            all_brands_info.append(get_brand_info(brand_name, resp))
-    print(f'Information about {len(all_brands_info)} brands has been successfully extracted\n')
+    print(f'Information about {len(brand_list)} brands has been successfully extracted\n')
 
     # Save info about all brands to csv file and PostgreSQL
-    save_to_csv(all_brands_info, table_name='brand_info')
-    save_to_db(all_brands_info, sql_create_brand_table, table_name='brand_info')
+    save_to_csv(brand_list, table_name='brand_info', unique_key='brand_id')
+    save_to_db(brand_list, sql_create_brand_table, table_name='brand_info')
 
-    # Put all product URLs in one generator
-    product_base_url = 'https://www.sephora.com/api2/catalog/products/{}?addCurrentSkuToProductChildSkus=true&showContent=true&includeConfigurableSku=true&countryCode=US&removePersonalizedData=true'
-    product_urls = (product_base_url.format(prod_id)
-                    for brand in all_brands_info
-                    if brand['products'] is not None
-                    for prod_id in brand['products'])
+    # # Put all product URLs in one generator
+    # product_base_url = f'https://www.sephora.my/api/v2.6/products/{}?include=variants.filter_values,variants.ingredient_preference,featured_ad.virtual_bundle.bundle_elements,product_articles,filter_types&v=3w2'
+    # product_urls = (product_base_url.format(prod_id)
+    #                 for brand in brand_list
+    #                 if brand['products'] is not None
+    #                 for prod_id in brand['products'])
 
-    # Get inforamtion about each product
-    print('Extracting information about products...')
-    with ThreadPool(10) as pool:
-        all_products_info = list(filter(None, pool.map(get_product_info, product_urls)))
+    # # Get inforamtion about each product
+    # print('Extracting information about products...')
+    # with ThreadPool(10) as pool:
+    #     all_products_info = list(filter(None, pool.map(get_product_info, product_urls)))
 
     print(f'''Extracting product information was completed successfully.
     Details about the extraction process:

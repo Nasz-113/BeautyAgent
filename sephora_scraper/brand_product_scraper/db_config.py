@@ -1,4 +1,4 @@
-host = '127.0.0.1'
+host = 'localhost'
 user = 'postgres'
-password = 'YOUR PASSWORD'
-db_name = 'YOUR DATABASE NAME'
+password = '12345'
+db_name = 'sephora'

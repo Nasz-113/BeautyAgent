@@ -1,18 +1,7 @@
 from __future__ import annotations
-from pydantic import BaseModel, validator, Field, root_validator
+from typing import List
+from pydantic import BaseModel, validator, Field, model_validator
 import re
-
-
-# Raw JSON brand page structure (BrandInfo input):
-# ├── displayName
-# ├── products
-# │   └── productId
-# └── totalProducts
-
-
-class BrandProductsIds(BaseModel):
-    product_id: str | None = Field(alias='productId')
-
 
 class BrandInfo(BaseModel):
     """From the json file of each brand, extracts and validates four fields.
@@ -20,22 +9,21 @@ class BrandInfo(BaseModel):
         {
             'brand_id': int,
             'brand_name': str,
+            'clean_brand_name': str,
             'products': list[BrandProductsIds(str)],
-            'total_products': int
+            'total_products': int,
+            'description': str
         }
 
     - If the field has no argument --> returns None
     - `Field()` function is for renaming --> new_name: any = Field(alias='oldName')
     """
-    brand_id: int | None = Field(alias='brandId')
-    brand_name: str | None = Field(alias='displayName')
-    products: list[BrandProductsIds] | None
-    total_products: int | None = Field(alias='totalProducts')
-
-    @validator('products')
-    def all_id_to_list(cls, field) -> list:
-        """Transform {{product_id: '111'}, {product_id: '222'}} -> ['111', '222']"""
-        return [key.product_id for key in field]
+    brand_id: int | None
+    products: List[str] | None
+    total_products: int | None
+    description: str | None = None
+    clean_brand_name: str | None
+    brand_name: str | None
 
 
 # Raw JSON product page structure (ProductInfo input):
@@ -58,9 +46,9 @@ class ChildSkus(BaseModel):
     sale_price: str | None = Field(alias='salePrice')
 
     @validator('list_price', 'sale_price')
-    def prices_to_float(cls, field) -> float:
+    def prices_to_float(cls, value) -> float:
         """"Transforms '$84.50' -> 84.5"""
-        return float(field[1:])
+        return float(value[1:])
 
 
 class Category3(BaseModel):
@@ -81,9 +69,9 @@ class Highlight(BaseModel):
     name: str | None
 
     @validator('name')
-    def clean_name(cls, field):
+    def clean_name(cls, value):
         """Clears each teg (or highlight) from extraneous characters."""
-        return field.strip().replace('®', '').replace('™', '').replace(' ', '')
+        return value.strip().replace('®', '').replace('™', '').replace(' ', '')
 
 
 class CurrentSku(BaseModel):
@@ -103,16 +91,16 @@ class CurrentSku(BaseModel):
     highlights: list[Highlight] | None
 
     @validator('size', 'variation_type', 'variation_value')
-    def clean_str_none(cls, field):
+    def clean_str_none(cls, value):
         """Checks if the value is the string 'None' -> None.
         Cleans up the string from extraneous characters.
         """
-        if 'None' in field:
+        if 'None' in value:
             return None
-        return field.strip().replace('®', '').replace('™', '').replace(' ', '')
+        return value.strip().replace('®', '').replace('™', '').replace(' ', '')
 
     @validator('ingredients')
-    def clean_ingredients(cls, field) -> list[str]:
+    def clean_ingredients(cls, value) -> list[str]:
         """Cleans information about ingredients and returns a list of cleaned ingredients.
             input (str):
                 '-Vit C: very healing<b>Aqua,<i>Niacinamide</i>, Dimethyl™</b>The product is safe'
@@ -127,8 +115,8 @@ class CurrentSku(BaseModel):
             5. Return the list of cleaned ingredients.
         """
         # Replace the matched characters with '~' and ''
-        field = re.sub(r'(<b>|</b>|<br>|</br>|<br />|<BR>|<p>|</p>|<span>|</span>|</a>|<a)', '~', field)
-        field = re.sub(r'(<.*?>|\n|®|™|)', '', field)
+        value = re.sub(r'(<b>|</b>|<br>|</br>|<br />|<BR>|<p>|</p>|<span>|</span>|</a>|<a)', '~', value)
+        value = re.sub(r'(<.*?>|\n|®|™|)', '', value)
 
         # Split by '~' and remove elements that start with unwanted prefixes
         UNWANTED_PREFIXES = ('-', '—', '–', 'Before using', 'Clean at Sephora prod', 'Disclaimer', 'DISCLA', 'Please',
@@ -136,26 +124,26 @@ class CurrentSku(BaseModel):
                              'The ingredients that', 'PRODUCT ING', 'Ingredient list', 'All ingred', 'Product ingred',
                              'Sulfates', 'Free of artificial', 'As part', 'This', '*', '(*', '+', 'The calculation',
                              '(1) the synthetic', 'and', '(2) the', ', Petrolatum', 'Fresh prod', 'Acqua di Parma')
-        field = [i.strip()
-                 for i in field.replace(' ', '').replace(' ', '').split('~')
+        value = [i.strip()
+                 for i in value.replace(' ', '').replace(' ', '').split('~')
                  if not i.strip().startswith(UNWANTED_PREFIXES)]
-        field = list(filter(None, field))
-        return field
+        value = list(filter(None, value))
+        return value
 
     @validator('price_usd', 'sale_price_usd')
-    def to_float_cur_and_sale_price(cls, field) -> float:
+    def to_float_cur_and_sale_price(cls, value) -> float:
         """Transforms '$84.50' -> 84.5"""
-        return float(field.strip()[1:])
+        return float(value.strip()[1:])
 
     @validator('value_price_usd')
-    def to_float_value_price(cls, field) -> float:
+    def to_float_value_price(cls, value) -> float:
         """Transforms '($84.50 value)' -> 84.5"""
-        return float(field.strip()[2:-7])
+        return float(value.strip()[2:-7])
 
     @validator('highlights')
-    def all_highlights_to_list(cls, field) -> list:
+    def all_highlights_to_list(cls, value) -> list:
         """Transforms {{'name': 'Vegan'}, {'name': 'Oil Free'}} -> ['Vegan', 'Oil Free']"""
-        return [val.name for val in field]
+        return [val.name for val in value]
 
 
 class BrandDetails(BaseModel):
@@ -173,20 +161,20 @@ class ProductDetails(BaseModel):
     reviews: int | None
 
     @validator('product_name')
-    def clean_product_name(cls, field) -> str:
+    def clean_product_name(cls, value) -> str:
         """Clears the product name from extraneous characters."""
-        return field.strip().replace('®', '').replace('™', '').replace(' ', '')
+        return value.strip().replace('®', '').replace('™', '').replace(' ', '')
 
     @validator('brand_id')
-    def unpack_brand_id(cls, field) -> str:
+    def unpack_brand_id(cls, value) -> str:
         """Extracts from {'b_id': '6236', 'b_name': 'Chanel'} -> '6236'."""
-        return list(field)[0][1]
+        return list(value)[0][1]
 
     @validator('brand_name')
-    def unpack_brand_name(cls, field) -> str:
+    def unpack_brand_name(cls, value) -> str:
         """Extracts from {'b_id': '6236', 'b_name': 'Chanel'} -> 'Chanel'.
         After extraction clears the brand name from extraneous characters"""
-        return list(field)[1][1].strip().replace('®', '').replace('™', '').replace(' ', '')
+        return list(value)[1][1].strip().replace('®', '').replace('™', '').replace(' ', '')
 
 
 class ProductInfo(BaseModel):
@@ -206,7 +194,7 @@ class ProductInfo(BaseModel):
     reg_child: list[ChildSkus] | None = Field(alias='regularChildSkus', exclude=True)  # auxiliary field
 
     @validator('categories')
-    def extract_categ_names(cls, field) -> dict:
+    def extract_categ_names(cls, value) -> dict:
         """Unpacks all category names (values) from nested dictionaries into one list,
         then puts them into the output dictionary in the correct order.
 
@@ -214,7 +202,7 @@ class ProductInfo(BaseModel):
             {'primary_category': name | None, 'secondary_category': name | None, 'tertiary_category': name | None}
         """
         # unpack all names in one list
-        d = field.dict()
+        d = value.dict()
 
         def nested_dict_values(d):
             for v in d.values():
@@ -234,7 +222,7 @@ class ProductInfo(BaseModel):
             categs = {'primary_category': names[0], 'secondary_category': names[1], 'tertiary_category': None}
         return categs
 
-    @root_validator
+    @model_validator(mode='after')
     def validate_child(cls, values) -> dict:
         """Returns three calculated dictionary.
         Returns::
