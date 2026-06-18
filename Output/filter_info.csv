@@ -1,0 +1,283 @@
+filter_id,value,filter_type_id
+528,Combination,41
+488,Alcohol-free,37
+684,Dry,41
+685,Normal,41
+714,Mini,38
+686,Oily,41
+504,Value Set,38
+585,Matte,46
+724,Clean at Sephora,37
+491,Fragrance-free,37
+693,Natural,46
+537,Makeup,40
+498,Paraben-free,37
+501,Sulphate-free,37
+575,Stick,36
+476,Balm,36
+489,Anti-oxidants,37
+701,Long-wearing,42
+477,Cream,36
+502,Vitamins,37
+497,Oil-free,37
+863,Vegan,37
+493,Hyaluronic Acid,37
+533,Waterproof,42
+577,Nude,47
+578,Pink,47
+573,Pencil,36
+568,Red,47
+563,Brown,47
+583,Multi,47
+486,AHAs/Glycolic Acid,37
+617,Hydrating,42
+837,Limited Edition,51
+616,High Shine,46
+576,Gold,47
+603,Radiant,46
+712,Sheer,46
+587,Shimmer,46
+496,Natural/Organic,37
+618,Tinted,47
+499,Peptides,37
+855,Silicone-free,37
+570,Cream To Powder,36
+841,Collagen,37
+609,Fill Pores,43
+610,Hydrate,43
+611,Mattify,43
+612,Minimise Fine Lines/Wrinkles,43
+613,Smoothen,43
+627,Ageing,49
+637,20s,50
+638,30s,50
+639,40s,50
+640,50+,50
+547,Dryness,49
+700,Under 20,50
+548,Dullness,49
+687,Liquid,36
+495,Mineral,37
+846,Niacinamide,37
+851,Prebiotics and Probiotics,37
+691,Sheer,48
+532,Sensitive,41
+479,Gel,36
+494,Hypo-allergenic,37
+566,Orange,47
+588,Colour,43
+594,Blonde,47
+561,Black,47
+626,Breakouts / Blemishes,49
+633,Uneven Skin Texture,49
+634,Uneven Skin Tone,49
+635,Pores,49
+838,Ceramide,37
+599,Single,40
+565,Grey,47
+856,Smudge-proof,42
+694,Metallic,46
+574,Pressed Powder,36
+605,Sun Protection,42
+481,Lotion,36
+604,Satin,46
+608,Colour Correct,43
+858,Squalane,37
+864,Vitamin C,37
+690,Long-wearing,43
+487,BHAs/Salicylic Acid,37
+862,Turmeric,37
+646,Moisturise,43
+591,Treatment,43
+567,Purple,47
+582,Clear,47
+629,Fine Lines & Wrinkles,49
+630,Firmness & Elasticity,49
+631,Oiliness,49
+653,Exfoliating,43
+648,Face,43
+652,Overnight,43
+672,Blush,43
+673,Bronzer & Luminiser,43
+674,Concealer,43
+675,Contour,43
+676,Foundation,43
+677,Highlighter,43
+663,Synthetic,40
+483,Powder,43
+632,Pigmentation & Dark Spots,49
+598,Palette,40
+482,Oil,36
+656,Peel,36
+538,Skincare,40
+658,Wash-Off,36
+840,Travel-Friendly,51
+562,Blue,47
+543,Coloured,44
+544,Curly / Permed,44
+545,Damaged/Split Ends,45
+709,Dry,44
+695,Dryness,45
+711,Normal,44
+710,Oily,44
+553,Heat Protection,45
+556,Smooth & Glossy,46
+555,Full & Voluminous,46
+688,Spray,36
+823,Coil,44
+825,Colour Fading / Colour Safe,45
+826,Fine,44
+697,Dullness,45
+827,Medium,44
+828,Straight,44
+831,Thick,44
+833,Wavy,44
+550,Frizz,45
+549,Fine Hair,45
+551,Flatness,45
+716,Flaky / Dry Scalp,45
+890,Increase Shine,45
+896,Hold & Styling Extending,45
+546,Dandruff,45
+839,Leave-In,36
+541,Hair,40
+830,Oiliness,45
+843,Mask,36
+891,Bond Building,45
+860,Transfer-proof,42
+601,Full,48
+606,Medium,48
+829,Light,48
+834,Buildable,48
+657,Sheet,36
+584,Glitter,46
+580,White,47
+564,Green,47
+485,Wipe,36
+705,Liquid,40
+708,Spray,40
+579,Silver,47
+641,Dark Circles,49
+642,Puffiness,49
+647,Eye,43
+581,Yellow,47
+857,Sweat-proof / Humidity-proof,42
+895,Non-Comedogenic,37
+704,Finishing,43
+571,Loose Powder,36
+615,Setting,43
+853,Scrub,36
+596,Pen,36
+668,Eyeshadow,43
+527,Wax,36
+602,Serum,36
+619,Quick Dry,42
+651,Nose,43
+698,Strengthening,42
+590,Lengthen,43
+592,Volumize,43
+475,Bar,36
+622,Nail Care,43
+589,Curl,43
+558,Tousled & Wavy,46
+889,Curl Enhancing,45
+671,Under Eye Concealer,43
+542,Beauty Tools,40
+552,Hair Loss,45
+628,Blackheads,49
+522,Perfume,40
+667,Eyebrows,43
+661,Trimmer,43
+650,Neck,43
+660,Shaver,43
+500,Retinoid,37
+892,Scalp Build Up,45
+478,Foam,36
+689,Powder,36
+600,Dramatic,46
+702,Cleansing,43
+669,Eyeliner,43
+621,Cuticle Care,43
+922,SPF 30 and under,85
+534,Body Sunscreen,43
+645,Face Sunscreen,43
+790,Redness,49
+699,Salts,36
+515,Diffuser,40
+514,Candle,40
+540,Fragrance,40
+707,Natural,40
+643,Body Tanner,43
+572,Mousse,36
+679,Lip Liner,43
+678,Lipstick,43
+654,Charcoal,36
+655,Clay/Mud,36
+512,50-100ml,38
+507,Floral,39
+539,Bath & Body,40
+513,Over 100ml,38
+649,Lip,43
+900,Plumping,42
+644,Face Tanner,43
+506,Citrus & Fruity,39
+511,Under 50ml,38
+893,Mist,36
+664,Hybrid,40
+757,Planet Aware,37
+713,Others,47
+593,Taupe,47
+832,Thinning,45
+557,Straight & Sleek,46
+924,SPF over 30,85
+509,Warm & Spicy,39
+510,Earthy & Woody,39
+521,Gift Sets,40
+525,Perfume Gift Sets,40
+899,Water Resistant,42
+5002,Korean Beauty,51
+508,Fresh,39
+670,Mascara,43
+824,Brassiness,45
+519,Cologne,40
+683,Ceramic,40
+681,Hair Straightener,43
+682,Hair Curler,43
+680,Hair Dryer,43
+706,Metallic,40
+70,Amber,7
+75,Floral,7
+76,Fresh,7
+845,Musky,7
+73,Citrus,7
+842,Fruity,7
+859,White Floral,7
+523,Rollerball,40
+854,Sweet,7
+861,Woody,7
+74,Earthy,7
+844,Green,7
+852,Spicy,7
+850,Powdery,7
+71,Aquatic,7
+72,Aromatic,7
+692,Full,46
+520,Deodorant,40
+927,Zinc SPF,85
+524,Lotion & Oil,40
+926,Mineral SPF,85
+535,Hair Sunscreen,43
+665,Solid,40
+666,Accessory,40
+847,Oriental,7
+554,Paste,36
+517,Room Spray,40
+559,Permanent Colour,43
+560,Temporary Colour,43
+836,Only at Sephora,51
+518,Home Fragrance Sets,40
+659,IPL,43
+925,Unisex / Genderless Scent,84
+835,Online Only,51
+623,Aftershave,43
+516,Aromatherapy Oil,40

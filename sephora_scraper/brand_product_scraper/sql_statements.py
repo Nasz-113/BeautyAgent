@@ -1,42 +1,57 @@
 sql_create_product_table = """
 CREATE TABLE IF NOT EXISTS {}(
-    product_id_db serial PRIMARY KEY,
-    product_id text,
+    product_id int PRIMARY KEY,
+    brand_id int REFERENCES brand_info(brand_id),
+    application text,
     product_name text,
-    brand_id int,
-    brand_name text,
-    loves_count int,
-    rating numeric,
-    reviews int,
-    size text,
-    variation_type text,
-    variation_value text,
-    variation_desc text,
-    ingredients text[],
-    price_usd numeric,
-    value_price_usd numeric,
-    sale_price_usd numeric,
-    limited_edition int,
-    new int,
-    online_only int,
-    out_of_stock int,
-    sephora_exclusive int,
-    highlights text[],
-    primary_category text,
-    secondary_category text,
-    tertiary_category text,
-    child_count int,
-    child_max_price numeric,
-    child_min_price numeric);
+    clean_product_name text,
+    description text,
+    display_original_price text,
+    display_price text,
+    additional_benefits text);
+"""
+
+sql_create_variant_table = """
+CREATE TABLE IF NOT EXISTS {}(
+    variant_id int PRIMARY KEY,
+    availability boolean default true,
+    variant_name text,
+    clean_variant_name text,
+    display_original_price text,
+    display_price text,
+    under_sale boolean default true);
+"""
+
+sql_create_filter_type_table = """
+CREATE TABLE IF NOT EXISTS {}(
+    filter_type_id int PRIMARY KEY,
+    value text);
+"""
+
+sql_create_filter_table = """
+CREATE TABLE IF NOT EXISTS {}(
+    filter_id int PRIMARY KEY,
+    value text,
+    filter_type_id int references filter_type_info(filter_type_id));
+"""
+
+sql_create_variant_filter_table = """
+CREATE TABLE IF NOT EXISTS {}(
+    variant_id int,
+    filter_id int,
+    PRIMARY KEY (variant_id, filter_id),
+    FOREIGN KEY (variant_id)
+        REFERENCES variant_info(variant_id),
+    FOREIGN KEY (filter_id)
+        REFERENCES filter_info(filter_id)
+);
 """
 
 sql_create_brand_table = """
 CREATE TABLE IF NOT EXISTS {}(
-    brand_id_db serial PRIMARY KEY,
-    brand_id int,
+    brand_id int PRIMARY KEY,
     brand_name text,
     clean_brand_name text,
-    products text[],
     description text,
     total_products int);
 """
