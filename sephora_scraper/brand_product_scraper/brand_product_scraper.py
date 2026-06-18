@@ -127,9 +127,9 @@ def get_all_product_info(headers: dict, brand_list: list[dict]):
                         filter_type_id = data["id"], 
                         value = data.get("attributes", {}).get("name")
                         )
-                    if filter_type_info.value is None:
+                    if data["id"] in ["38", "47", "84", "85"]:
                         print(data)
-                        filter_type_info.value = f"{data.get("type", "")}({data.get("attributes", {}).get("label")})"
+                        # filter_type_info.value = f"{data.get("type", "")}({data.get("attributes", {}).get("label")})"
                     if filter_type_info.filter_type_id not in [x["filter_type_id"] for x in filter_type_list]:
                         filter_type_list.append(filter_type_info.model_dump())
                 elif data["type"] == "filter-values":
