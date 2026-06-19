@@ -65,7 +65,15 @@ def get_all_brand_info(resp) -> list[str]:
     # print(resp.json())
     brand_list = []
     headers = {
-        'User-Agent': 'PostmanRuntime/7.54.0',
+        'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+        ' AppleWebKit/537.36 '
+        '(KHTML, like Gecko)'
+        ' Chrome/137.0.0.0 Safari/537.36',
+
+        'Accept-Language':'en-MY,en;q=0.9',
+        'Accept':'application/json',
+        'Referer':'https://www.sephora.my/',
         'Accept-Language': 'en-MY',
         'x-swa': 'web',
         'Accept': '*/*',
@@ -115,6 +123,8 @@ def get_all_product_info(headers: dict, brand_list: list[dict]):
                 continue
             # print(f"Good to extract data: {product_slug_url}")
             for data in product["included"]:
+                if data["id"] in [38, 47, 84, 85]:
+                        print(data)
                 if data["type"] == "ingredient-preferences":
                     filter_type_info = FilterTypeInfo(
                         filter_type_id = data["id"], 
@@ -122,17 +132,14 @@ def get_all_product_info(headers: dict, brand_list: list[dict]):
                         )
                     if filter_type_info.value not in [x["value"] for x in filter_type_list]:
                         filter_type_list.append(filter_type_info.model_dump())
-                elif (data["type"] == "filter-types" or data["id"] in ["38", "47", "84", "85"]):
+                elif (data["type"] == "filter-types"):
                     filter_type_info = FilterTypeInfo(
                         filter_type_id = data["id"], 
                         value = data.get("attributes", {}).get("name")
                         )
-                    if data["id"] in ["38", "47", "84", "85"]:
-                        print(data)
-                        # filter_type_info.value = f"{data.get("type", "")}({data.get("attributes", {}).get("label")})"
                     if filter_type_info.filter_type_id not in [x["filter_type_id"] for x in filter_type_list]:
                         filter_type_list.append(filter_type_info.model_dump())
-                elif data["type"] == "filter-values":
+                elif data["type"] == "filter-values" and data.get("attributes", {}).get("filter-type-id") not in [38, 47, 84, 85]:
                     filter_info = FilterInfo(
                         filter_id = data["id"], 
                         value = data.get("attributes", {}).get("value"), 
@@ -286,8 +293,19 @@ def main():
     # Get all brand names and put them in one list
     try:
         headers = {
-        'User-Agent': 'PostmanRuntime/7.54.0',
-        'Accept-Language': 'en-MY'
+        'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+        ' AppleWebKit/537.36 '
+        '(KHTML, like Gecko)'
+        ' Chrome/137.0.0.0 Safari/537.36',
+
+        'Accept-Language':'en-MY,en;q=0.9',
+        'Accept':'application/json',
+        'Referer':'https://www.sephora.my/',
+        'Accept-Language': 'en-MY',
+        'x-swa': 'web',
+        'Accept': '*/*',
+        'Connection': 'keep-alive',
         }
         brand_list = get_all_brand_info(make_request('https://www.sephora.my/api/v2.6/brands?page[size]=500', headers))
     except Exception as e:
@@ -310,7 +328,15 @@ def main():
     # Put all product URLs in one generator
     try:
         headers = {
-        'User-Agent': 'PostmanRuntime/7.54.0',
+        'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+        ' AppleWebKit/537.36 '
+        '(KHTML, like Gecko)'
+        ' Chrome/137.0.0.0 Safari/537.36',
+
+        'Accept-Language':'en-MY,en;q=0.9',
+        'Accept':'application/json',
+        'Referer':'https://www.sephora.my/',
         'Accept-Language': 'en-MY',
         'x-swa': 'web',
         'Accept': '*/*',

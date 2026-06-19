@@ -3603,7 +3603,7 @@ variant_id,availability,variant_name,clean_variant_name,display_original_price,d
 218628,True,30ml,30ml,RM159.00,RM159.00,False
 231092,True,default,Default,RM269.00,RM269.00,False
 231095,True,369ml,369ml,RM159.00,RM159.00,False
-223409,True,236-ml,236 ml,RM145.00,RM145.00,False
+223409,True,236ml,236ml,RM145.00,RM145.00,False
 253375,True,118ml,118ml,RM149.00,RM149.00,False
 239993,True,148ml,148ml,RM229.00,RM229.00,False
 194081,True,226ml,226ml,RM145.00,RM145.00,False
@@ -15950,228 +15950,228 @@ variant_id,availability,variant_name,clean_variant_name,display_original_price,d
 239802,True,30ml,30ml,RM310.00,RM310.00,False
 287178,True,default,Default,RM430.00,RM430.00,False
 277768,True,default,Default,RM160.00,RM160.00,False
-218953,True,50ml,50ml,RM195.00,RM195.00,False
-274627,True,50-ml,50 ML,RM205.00,RM205.00,False
-240680,True,30ml,30ml,RM205.00,RM205.00,False
-223993,True,15ml,15ml,RM345.00,RM345.00,False
-194402,True,125ml,125ml,RM150.00,RM150.00,False
-274297,True,20g,20g,RM130.00,RM130.00,False
-214690,True,default,Default,RM45.00,RM45.00,False
-194404,True,125ml,125ml,RM180.00,RM180.00,False
-219959,True,n1,N1,RM165.00,RM165.00,False
-219958,True,n1-dot-5,N1.5,RM165.00,RM165.00,False
-219957,True,g2,G2,RM165.00,RM165.00,False
-219956,True,n2,N2,RM165.00,RM165.00,False
-219955,True,g3,G3,RM165.00,RM165.00,False
-219954,True,n3,N3,RM165.00,RM165.00,False
-219960,True,g4,G4,RM165.00,RM165.00,False
-240478,True,50ml,50ml,RM250.00,RM250.00,False
-261755,True,50ml,50ml,RM550.00,RM550.00,False
-277340,True,fair-ivory,Fair Ivory,RM145.00,RM145.00,False
-277341,True,light-beige,Light Beige,RM145.00,RM145.00,False
-277342,True,light-ivory,Light Ivory,RM145.00,RM145.00,False
-277343,True,light-ochre,Light Ochre,RM145.00,RM145.00,False
-276828,True,medium-ivory,Medium Ivory,RM145.00,RM145.00,False
-277339,True,medium-ochre,Medium Ochre,RM145.00,RM145.00,False
-274629,True,50ml,50ml,RM205.00,RM205.00,False
-252090,True,414,414,RM130.00,RM130.00,False
-252081,True,403,403,RM130.00,RM130.00,False
-252082,True,404,404,RM130.00,RM130.00,False
-252083,True,405,405,RM130.00,RM130.00,False
-252084,True,407,407,RM130.00,RM130.00,False
-252085,True,408,408,RM130.00,RM130.00,False
-252086,True,409,409,RM130.00,RM130.00,False
-252087,True,410,410,RM130.00,RM130.00,False
-252088,True,411,411,RM130.00,RM130.00,False
-251382,True,412,412,RM130.00,RM130.00,False
-252089,True,413,413,RM130.00,RM130.00,False
-252080,True,402,402,RM130.00,RM130.00,False
-252091,True,415,415,RM130.00,RM130.00,False
-252092,True,416,416,RM130.00,RM130.00,False
-252093,True,417,417,RM130.00,RM130.00,False
-252094,True,422,422,RM130.00,RM130.00,False
-251386,True,424,424,RM130.00,RM130.00,False
-261762,True,150ml,150ml,RM375.00,RM375.00,False
-261759,True,50ml,50ml,RM770.00,RM770.00,False
-199416,True,02-brown,02 Brown,RM105.00,RM105.00,False
-199417,True,03-plum,03 Plum,RM105.00,RM105.00,False
-199418,True,04-navy,04 Navy,RM105.00,RM105.00,False
-199415,True,01-black,01 Black,RM105.00,RM105.00,False
-223982,True,12-piece,12 piece,RM360.00,RM360.00,False
-277344,True,default,Default,RM58.00,RM58.00,False
-219953,True,default,Default,RM45.00,RM45.00,False
-219971,True,default,Default,RM50.00,RM50.00,False
-194405,True,150ml,150ml,RM240.00,RM240.00,False
-274639,True,50-ml,50 ML,RM400.00,RM400.00,False
-240482,True,50ml,50ml,RM250.00,RM250.00,False
-251225,True,145ml,145ml,RM360.00,RM360.00,False
-194403,True,125ml,125ml,RM180.00,RM180.00,False
-251226,True,150ml,150ml,RM305.00,RM305.00,False
-261764,True,100ml,100ml,RM450.00,RM450.00,False
-251230,True,15ml,15ml,RM332.00,RM332.00,False
-274628,True,50ml,50ml,RM205.00,RM205.00,False
-259202,True,15ml,15ml,"RM1,495.00","RM1,495.00",False
-199439,True,507-murmur,507 Murmur,RM125.00,RM125.00,False
-199434,True,502-whisper,502 Whisper,RM125.00,RM125.00,False
-199436,True,504-thigh-high,504 Thigh High,RM125.00,RM125.00,False
-199437,True,505-peep-show,505 Peep Show,RM125.00,RM125.00,False
-199438,True,506-disrobed,506 Disrobed,RM125.00,RM125.00,False
-199440,True,508-semi-nude,508 Semi Nude,RM125.00,RM125.00,False
-199441,True,509-flame,509 Flame,RM125.00,RM125.00,False
-199442,True,510-night-life,510 Night Life,RM125.00,RM125.00,False
-199445,True,513-shock-wave,513 Shock Wave,RM125.00,RM125.00,False
-199446,True,514-hyper-red,514 Hyper Red,RM125.00,RM125.00,False
-199447,True,515-mellow-drama,515 Mellow Drama,RM125.00,RM125.00,False
-199448,True,516-exotic-red,516 Exotic Red,RM125.00,RM125.00,False
-199449,True,517-rose-hip,517 Rose Hip,RM125.00,RM125.00,False
-199450,True,518-selfie,518 Selfie,RM125.00,RM125.00,False
-199453,True,521-nocturnal,521 Nocturnal,RM125.00,RM125.00,False
-199454,True,522-velvet-rope,522 Velvet Rope,RM125.00,RM125.00,False
-199456,True,524-dark-fantasy,524 Dark Fantasy,RM125.00,RM125.00,False
-257458,True,560-obsidian,560 Obsidian,RM240.00,RM240.00,False
-257439,True,120-ivory,120 Ivory,RM240.00,RM240.00,False
-257440,True,130-opal,130 Opal,RM240.00,RM240.00,False
-257441,True,140-porcelain,140 Porcelain,RM240.00,RM240.00,False
-257442,True,150-lace,150 Lace,RM240.00,RM240.00,False
-257443,True,160-shell,160 Shell,RM240.00,RM240.00,False
-257444,True,210-birch,210 Birch,RM240.00,RM240.00,False
-257446,True,230-alder,230 Alder,RM240.00,RM240.00,False
-257447,True,240-quartz,240 Quartz,RM240.00,RM240.00,False
-257451,True,320-pine,320 Pine,RM240.00,RM240.00,False
-257452,True,330-bamboo,330 Bamboo,RM240.00,RM240.00,False
-257453,True,340-oak,340 Oak,RM240.00,RM240.00,False
-257454,True,350-maple,350 Maple,RM240.00,RM240.00,False
-257455,True,360-citrine,360 Citrine,RM240.00,RM240.00,False
-257461,True,430-cedar,430 Cedar,RM240.00,RM240.00,False
-257459,True,440-amber,440 Amber,RM240.00,RM240.00,False
-257462,True,450-copper,450 Copper,RM240.00,RM240.00,False
-257467,True,460-topaz,460 Topaz,RM240.00,RM240.00,False
-257465,True,510-sued,510 Sued,RM240.00,RM240.00,False
-257464,True,520-rosewood,520 Rosewood,RM240.00,RM240.00,False
-257463,True,530-henna,530 Henna,RM240.00,RM240.00,False
-257456,True,540-mahogany,540 Mahogany,RM240.00,RM240.00,False
-257457,True,550-jasper,550 Jasper,RM240.00,RM240.00,False
-257438,True,110-alabaster,110 Alabaster,RM240.00,RM240.00,False
-194406,True,150ml,150ml,RM240.00,RM240.00,False
-219962,True,110-alabaster,110 Alabaster,RM185.00,RM185.00,False
-219963,True,130-opal,130 Opal,RM185.00,RM185.00,False
-219964,True,160-shell,160 Shell,RM185.00,RM185.00,False
-219965,True,220-linen,220 Linen,RM185.00,RM185.00,False
-219966,True,250-sand,250 Sand,RM185.00,RM185.00,False
-219967,True,310-silk,310 Silk,RM185.00,RM185.00,False
-219968,True,340-oak,340 Oak,RM185.00,RM185.00,False
-219969,True,350-maple,350 Maple,RM185.00,RM185.00,False
-219970,True,360-citrine,360 Citrine,RM185.00,RM185.00,False
-210557,True,180ml,180ml,RM190.00,RM190.00,False
-261753,True,50ml,50ml,RM560.00,RM560.00,False
-261763,True,100ml,100ml,RM450.00,RM450.00,False
-261761,True,150ml,150ml,RM375.00,RM375.00,False
-199517,True,02-narcissus,02 Narcissus,RM110.00,RM110.00,False
-199518,True,03-peony,03 Peony,RM110.00,RM110.00,False
-199519,True,04-hibiscus,04 Hibiscus,RM110.00,RM110.00,False
-199520,True,05-poppy,05 Poppy,RM110.00,RM110.00,False
-199521,True,06-redwood,06 Redwood,RM110.00,RM110.00,False
-199522,True,07-dahlia,07 Dahlia,RM110.00,RM110.00,False
-199523,True,08-lotus,08 Lotus,RM110.00,RM110.00,False
-199516,True,01-ginkgo,01 Ginkgo,RM110.00,RM110.00,False
-199525,True,10-juniper,10 Juniper,RM110.00,RM110.00,False
-209717,True,11-bamboo,11 Bamboo,RM110.00,RM110.00,False
-209718,True,12-tiger-lily,12 Tiger Lily,RM110.00,RM110.00,False
-209719,True,13-sakura,13 Sakura,RM110.00,RM110.00,False
-209720,True,14-lilac,14 Lilac,RM110.00,RM110.00,False
-209721,True,15-azalea,15 Azalea,RM110.00,RM110.00,False
-277586,True,default,Default,RM290.00,RM290.00,False
-277587,True,default,Default,RM205.00,RM205.00,False
-274623,True,75ml,75ml,RM640.00,RM640.00,False
-274621,True,50ml,50ml,RM495.00,RM495.00,False
-274620,True,30-ml,30 ML,RM335.00,RM335.00,False
-208573,True,50ml,50ml,RM380.00,RM380.00,False
-192033,True,17ml,17ml,RM665.00,RM665.00,False
-223979,True,200ml,200ml,RM600.00,RM600.00,False
-209716,True,04-aurora,04 Aurora,RM120.00,RM120.00,False
-207433,True,01-black-pulse,01 Black Pulse,RM125.00,RM125.00,False
-223980,True,50ml,50ml,"RM1,260.00","RM1,260.00",False
-215890,True,shiseido-uv-protect-h-face-50ml,50ml,RM185.00,RM185.00,False
+218953,True,50ml,50ml,RM195.00,RM156.00,True
+274627,True,50-ml,50 ML,RM205.00,RM164.00,True
+240680,True,30ml,30ml,RM205.00,RM164.00,True
+223993,True,15ml,15ml,RM345.00,RM276.00,True
+194402,True,125ml,125ml,RM150.00,RM120.00,True
+274297,True,20g,20g,RM130.00,RM104.00,True
+214690,True,default,Default,RM45.00,RM36.00,True
+194404,True,125ml,125ml,RM180.00,RM144.00,True
+219959,True,n1,N1,RM165.00,RM132.00,True
+219958,True,n1-dot-5,N1.5,RM165.00,RM132.00,True
+219957,True,g2,G2,RM165.00,RM132.00,True
+219956,True,n2,N2,RM165.00,RM132.00,True
+219955,True,g3,G3,RM165.00,RM132.00,True
+219954,True,n3,N3,RM165.00,RM132.00,True
+219960,True,g4,G4,RM165.00,RM132.00,True
+240478,True,50ml,50ml,RM250.00,RM200.00,True
+261755,True,50ml,50ml,RM550.00,RM440.00,True
+277340,True,fair-ivory,Fair Ivory,RM145.00,RM116.00,True
+277341,True,light-beige,Light Beige,RM145.00,RM116.00,True
+277342,True,light-ivory,Light Ivory,RM145.00,RM116.00,True
+277343,True,light-ochre,Light Ochre,RM145.00,RM116.00,True
+276828,True,medium-ivory,Medium Ivory,RM145.00,RM116.00,True
+277339,True,medium-ochre,Medium Ochre,RM145.00,RM116.00,True
+274629,True,50ml,50ml,RM205.00,RM164.00,True
+252090,True,414,414,RM130.00,RM104.00,True
+252081,True,403,403,RM130.00,RM104.00,True
+252082,True,404,404,RM130.00,RM104.00,True
+252083,True,405,405,RM130.00,RM104.00,True
+252084,True,407,407,RM130.00,RM104.00,True
+252085,True,408,408,RM130.00,RM104.00,True
+252086,True,409,409,RM130.00,RM104.00,True
+252087,True,410,410,RM130.00,RM104.00,True
+252088,True,411,411,RM130.00,RM104.00,True
+251382,True,412,412,RM130.00,RM104.00,True
+252089,True,413,413,RM130.00,RM104.00,True
+252080,True,402,402,RM130.00,RM104.00,True
+252091,True,415,415,RM130.00,RM104.00,True
+252092,True,416,416,RM130.00,RM104.00,True
+252093,True,417,417,RM130.00,RM104.00,True
+252094,True,422,422,RM130.00,RM104.00,True
+251386,True,424,424,RM130.00,RM104.00,True
+261762,True,150ml,150ml,RM375.00,RM300.00,True
+261759,True,50ml,50ml,RM770.00,RM616.00,True
+199416,True,02-brown,02 Brown,RM105.00,RM84.00,True
+199417,True,03-plum,03 Plum,RM105.00,RM84.00,True
+199418,True,04-navy,04 Navy,RM105.00,RM84.00,True
+199415,True,01-black,01 Black,RM105.00,RM84.00,True
+223982,True,12-piece,12 piece,RM360.00,RM288.00,True
+277344,True,default,Default,RM58.00,RM46.40,True
+219953,True,default,Default,RM45.00,RM36.00,True
+219971,True,default,Default,RM50.00,RM40.00,True
+194405,True,150ml,150ml,RM240.00,RM192.00,True
+274639,True,50-ml,50 ML,RM400.00,RM320.00,True
+240482,True,50ml,50ml,RM250.00,RM200.00,True
+251225,True,145ml,145ml,RM360.00,RM288.00,True
+194403,True,125ml,125ml,RM180.00,RM144.00,True
+251226,True,150ml,150ml,RM305.00,RM244.00,True
+261764,True,100ml,100ml,RM450.00,RM360.00,True
+251230,True,15ml,15ml,RM332.00,RM265.60,True
+274628,True,50ml,50ml,RM205.00,RM164.00,True
+259202,True,15ml,15ml,"RM1,495.00","RM1,196.00",True
+199439,True,507-murmur,507 Murmur,RM125.00,RM100.00,True
+199434,True,502-whisper,502 Whisper,RM125.00,RM100.00,True
+199436,True,504-thigh-high,504 Thigh High,RM125.00,RM100.00,True
+199437,True,505-peep-show,505 Peep Show,RM125.00,RM100.00,True
+199438,True,506-disrobed,506 Disrobed,RM125.00,RM100.00,True
+199440,True,508-semi-nude,508 Semi Nude,RM125.00,RM100.00,True
+199441,True,509-flame,509 Flame,RM125.00,RM100.00,True
+199442,True,510-night-life,510 Night Life,RM125.00,RM100.00,True
+199445,True,513-shock-wave,513 Shock Wave,RM125.00,RM100.00,True
+199446,True,514-hyper-red,514 Hyper Red,RM125.00,RM100.00,True
+199447,True,515-mellow-drama,515 Mellow Drama,RM125.00,RM100.00,True
+199448,True,516-exotic-red,516 Exotic Red,RM125.00,RM100.00,True
+199449,True,517-rose-hip,517 Rose Hip,RM125.00,RM100.00,True
+199450,True,518-selfie,518 Selfie,RM125.00,RM100.00,True
+199453,True,521-nocturnal,521 Nocturnal,RM125.00,RM100.00,True
+199454,True,522-velvet-rope,522 Velvet Rope,RM125.00,RM100.00,True
+199456,True,524-dark-fantasy,524 Dark Fantasy,RM125.00,RM100.00,True
+257458,True,560-obsidian,560 Obsidian,RM240.00,RM192.00,True
+257439,True,120-ivory,120 Ivory,RM240.00,RM192.00,True
+257440,True,130-opal,130 Opal,RM240.00,RM192.00,True
+257441,True,140-porcelain,140 Porcelain,RM240.00,RM192.00,True
+257442,True,150-lace,150 Lace,RM240.00,RM192.00,True
+257443,True,160-shell,160 Shell,RM240.00,RM192.00,True
+257444,True,210-birch,210 Birch,RM240.00,RM192.00,True
+257446,True,230-alder,230 Alder,RM240.00,RM192.00,True
+257447,True,240-quartz,240 Quartz,RM240.00,RM192.00,True
+257451,True,320-pine,320 Pine,RM240.00,RM192.00,True
+257452,True,330-bamboo,330 Bamboo,RM240.00,RM192.00,True
+257453,True,340-oak,340 Oak,RM240.00,RM192.00,True
+257454,True,350-maple,350 Maple,RM240.00,RM192.00,True
+257455,True,360-citrine,360 Citrine,RM240.00,RM192.00,True
+257461,True,430-cedar,430 Cedar,RM240.00,RM192.00,True
+257459,True,440-amber,440 Amber,RM240.00,RM192.00,True
+257462,True,450-copper,450 Copper,RM240.00,RM192.00,True
+257467,True,460-topaz,460 Topaz,RM240.00,RM192.00,True
+257465,True,510-sued,510 Sued,RM240.00,RM192.00,True
+257464,True,520-rosewood,520 Rosewood,RM240.00,RM192.00,True
+257463,True,530-henna,530 Henna,RM240.00,RM192.00,True
+257456,True,540-mahogany,540 Mahogany,RM240.00,RM192.00,True
+257457,True,550-jasper,550 Jasper,RM240.00,RM192.00,True
+257438,True,110-alabaster,110 Alabaster,RM240.00,RM192.00,True
+194406,True,150ml,150ml,RM240.00,RM192.00,True
+219962,True,110-alabaster,110 Alabaster,RM185.00,RM148.00,True
+219963,True,130-opal,130 Opal,RM185.00,RM148.00,True
+219964,True,160-shell,160 Shell,RM185.00,RM148.00,True
+219965,True,220-linen,220 Linen,RM185.00,RM148.00,True
+219966,True,250-sand,250 Sand,RM185.00,RM148.00,True
+219967,True,310-silk,310 Silk,RM185.00,RM148.00,True
+219968,True,340-oak,340 Oak,RM185.00,RM148.00,True
+219969,True,350-maple,350 Maple,RM185.00,RM148.00,True
+219970,True,360-citrine,360 Citrine,RM185.00,RM148.00,True
+210557,True,180ml,180ml,RM190.00,RM152.00,True
+261753,True,50ml,50ml,RM560.00,RM448.00,True
+261763,True,100ml,100ml,RM450.00,RM360.00,True
+261761,True,150ml,150ml,RM375.00,RM300.00,True
+199517,True,02-narcissus,02 Narcissus,RM110.00,RM88.00,True
+199518,True,03-peony,03 Peony,RM110.00,RM88.00,True
+199519,True,04-hibiscus,04 Hibiscus,RM110.00,RM88.00,True
+199520,True,05-poppy,05 Poppy,RM110.00,RM88.00,True
+199521,True,06-redwood,06 Redwood,RM110.00,RM88.00,True
+199522,True,07-dahlia,07 Dahlia,RM110.00,RM88.00,True
+199523,True,08-lotus,08 Lotus,RM110.00,RM88.00,True
+199516,True,01-ginkgo,01 Ginkgo,RM110.00,RM88.00,True
+199525,True,10-juniper,10 Juniper,RM110.00,RM88.00,True
+209717,True,11-bamboo,11 Bamboo,RM110.00,RM88.00,True
+209718,True,12-tiger-lily,12 Tiger Lily,RM110.00,RM88.00,True
+209719,True,13-sakura,13 Sakura,RM110.00,RM88.00,True
+209720,True,14-lilac,14 Lilac,RM110.00,RM88.00,True
+209721,True,15-azalea,15 Azalea,RM110.00,RM88.00,True
+277586,True,default,Default,RM290.00,RM232.00,True
+277587,True,default,Default,RM205.00,RM164.00,True
+274623,True,75ml,75ml,RM640.00,RM512.00,True
+274621,True,50ml,50ml,RM495.00,RM396.00,True
+274620,True,30-ml,30 ML,RM335.00,RM268.00,True
+208573,True,50ml,50ml,RM380.00,RM304.00,True
+192033,True,17ml,17ml,RM665.00,RM532.00,True
+223979,True,200ml,200ml,RM600.00,RM480.00,True
+209716,True,04-aurora,04 Aurora,RM120.00,RM96.00,True
+207433,True,01-black-pulse,01 Black Pulse,RM125.00,RM100.00,True
+223980,True,50ml,50ml,"RM1,260.00","RM1,008.00",True
+215890,True,shiseido-uv-protect-h-face-50ml,50ml,RM185.00,RM148.00,True
 218947,True,50ml,50ml,RM680.00,RM680.00,False
 29101,True,default,Default,RM230.00,RM230.00,False
-214650,True,01-translucent-matte,01 Translucent Matte,RM185.00,RM185.00,False
-271213,True,default,Default,RM145.00,RM145.00,False
-229497,True,110-alabaster,110 Alabaster,RM225.00,RM225.00,False
-229498,True,120-ivory,120 Ivory,RM225.00,RM225.00,False
-229468,True,130-opal,130 Opal,RM225.00,RM225.00,False
-229473,True,220-linen,220 Linen,RM225.00,RM225.00,False
-214680,True,02-matte,02 Matte,RM165.00,RM165.00,False
-214681,True,01-radiant,01 Radiant,RM165.00,RM165.00,False
-199458,True,202-bullet-train,202 Bullet Train,RM105.00,RM105.00,False
-199459,True,203-night-rose,203 Night Rose,RM105.00,RM105.00,False
-199460,True,204-scarlet-rush,204 Scarlet Rush,RM105.00,RM105.00,False
-199461,True,205-pixel-pink,205 Pixel Pink,RM105.00,RM105.00,False
-199462,True,206-botan,206 Botan,RM105.00,RM105.00,False
-199463,True,207-pink-dynasty,207 Pink Dynasty,RM105.00,RM105.00,False
-199464,True,208-streaming-mauve,208 Streaming Mauve,RM105.00,RM105.00,False
-199466,True,210-j-pop,210 J-Pop,RM105.00,RM105.00,False
-199467,True,211-rose-muse,211 Rose Muse,RM105.00,RM105.00,False
-199469,True,213-neon-buzz,213 Neon Buzz,RM105.00,RM105.00,False
-199470,True,214-pink-flash,214 Pink Flash,RM105.00,RM105.00,False
-199471,True,215-future-shock,215 Future Shock,RM105.00,RM105.00,False
-199472,True,216-vortex,216 Vortex,RM105.00,RM105.00,False
-199473,True,217-coral-pop,217 Coral Pop,RM105.00,RM105.00,False
-199474,True,218-volcanic,218 Volcanic,RM105.00,RM105.00,False
-199475,True,219-firecracker,219 Firecracker,RM105.00,RM105.00,False
-199476,True,220-lantern-red,220 Lantern Red,RM105.00,RM105.00,False
-199477,True,221-code-red,221 Code Red,RM105.00,RM105.00,False
-199478,True,222-ginza-red,222 Ginza Red,RM105.00,RM105.00,False
-199479,True,223-shizuka-red,223 Shizuka Red,RM105.00,RM105.00,False
-199480,True,224-noble-plum,224 Noble Plum,RM105.00,RM105.00,False
-199481,True,225-high-rise,225 High Rise,RM105.00,RM105.00,False
-199482,True,226-cherry-festival,226 Cherry Festival,RM105.00,RM105.00,False
-199483,True,227-sleeping-dragon,227 Sleeping Dragon,RM105.00,RM105.00,False
-199484,True,228-metropolis,228 Metropolis,RM105.00,RM105.00,False
-199414,True,01-shibui-black,01 Shibui Black,RM130.00,RM130.00,False
-192034,True,50ml,50ml,"RM1,220.00","RM1,220.00",False
-218943,True,75ml,75ml,RM480.00,RM480.00,False
-229495,True,20ml,20ml,RM520.00,RM520.00,False
-199412,True,09-nippon-noir,09 Nippon Noir,RM105.00,RM105.00,False
+214650,True,01-translucent-matte,01 Translucent Matte,RM185.00,RM148.00,True
+271213,True,default,Default,RM145.00,RM116.00,True
+229497,True,110-alabaster,110 Alabaster,RM225.00,RM180.00,True
+229498,True,120-ivory,120 Ivory,RM225.00,RM180.00,True
+229468,True,130-opal,130 Opal,RM225.00,RM180.00,True
+229473,True,220-linen,220 Linen,RM225.00,RM180.00,True
+214680,True,02-matte,02 Matte,RM165.00,RM132.00,True
+214681,True,01-radiant,01 Radiant,RM165.00,RM132.00,True
+199458,True,202-bullet-train,202 Bullet Train,RM105.00,RM84.00,True
+199459,True,203-night-rose,203 Night Rose,RM105.00,RM84.00,True
+199460,True,204-scarlet-rush,204 Scarlet Rush,RM105.00,RM84.00,True
+199461,True,205-pixel-pink,205 Pixel Pink,RM105.00,RM84.00,True
+199462,True,206-botan,206 Botan,RM105.00,RM84.00,True
+199463,True,207-pink-dynasty,207 Pink Dynasty,RM105.00,RM84.00,True
+199464,True,208-streaming-mauve,208 Streaming Mauve,RM105.00,RM84.00,True
+199466,True,210-j-pop,210 J-Pop,RM105.00,RM84.00,True
+199467,True,211-rose-muse,211 Rose Muse,RM105.00,RM84.00,True
+199469,True,213-neon-buzz,213 Neon Buzz,RM105.00,RM84.00,True
+199470,True,214-pink-flash,214 Pink Flash,RM105.00,RM84.00,True
+199471,True,215-future-shock,215 Future Shock,RM105.00,RM84.00,True
+199472,True,216-vortex,216 Vortex,RM105.00,RM84.00,True
+199473,True,217-coral-pop,217 Coral Pop,RM105.00,RM84.00,True
+199474,True,218-volcanic,218 Volcanic,RM105.00,RM84.00,True
+199475,True,219-firecracker,219 Firecracker,RM105.00,RM84.00,True
+199476,True,220-lantern-red,220 Lantern Red,RM105.00,RM84.00,True
+199477,True,221-code-red,221 Code Red,RM105.00,RM84.00,True
+199478,True,222-ginza-red,222 Ginza Red,RM105.00,RM84.00,True
+199479,True,223-shizuka-red,223 Shizuka Red,RM105.00,RM84.00,True
+199480,True,224-noble-plum,224 Noble Plum,RM105.00,RM84.00,True
+199481,True,225-high-rise,225 High Rise,RM105.00,RM84.00,True
+199482,True,226-cherry-festival,226 Cherry Festival,RM105.00,RM84.00,True
+199483,True,227-sleeping-dragon,227 Sleeping Dragon,RM105.00,RM84.00,True
+199484,True,228-metropolis,228 Metropolis,RM105.00,RM84.00,True
+199414,True,01-shibui-black,01 Shibui Black,RM130.00,RM104.00,True
+192034,True,50ml,50ml,"RM1,220.00",RM976.00,True
+218943,True,75ml,75ml,RM480.00,RM384.00,True
+229495,True,20ml,20ml,RM520.00,RM416.00,True
+199412,True,09-nippon-noir,09 Nippon Noir,RM105.00,RM84.00,True
 214658,True,102-fair,102 Fair,RM135.00,RM135.00,False
 214698,True,201-light,201 Light,RM135.00,RM135.00,False
 214659,True,202-light,202 Light,RM135.00,RM135.00,False
 214660,True,203-light,203 Light,RM135.00,RM135.00,False
 214664,True,304-medium,304 Medium,RM135.00,RM135.00,False
-199509,True,02-twilight-hour,02 Twilight Hour,RM140.00,RM140.00,False
-199513,True,06-alpen-glow,06 Alpen Glow,RM140.00,RM140.00,False
+199509,True,02-twilight-hour,02 Twilight Hour,RM140.00,RM112.00,True
+199513,True,06-alpen-glow,06 Alpen Glow,RM140.00,RM112.00,True
 208577,True,light,Light,RM125.00,RM125.00,False
 208578,True,medium,Medium,RM125.00,RM125.00,False
 208579,True,medium-dark,Medium Dark,RM125.00,RM125.00,False
-186065,True,30ml,30ml,"RM1,050.00","RM1,050.00",False
-214651,True,102-fair,102 Fair,RM135.00,RM135.00,False
-214652,True,202-light,202 Light,RM135.00,RM135.00,False
-214653,True,203-light,203 Light,RM135.00,RM135.00,False
-214654,True,301-medium,301 Medium,RM135.00,RM135.00,False
-214655,True,302-medium,302 Medium,RM135.00,RM135.00,False
-214656,True,303-medium,303 Medium,RM135.00,RM135.00,False
-214657,True,304-medium,304 Medium,RM135.00,RM135.00,False
-192032,True,50ml,50ml,"RM1,380.00","RM1,380.00",False
-251231,True,default,Default,RM645.00,RM645.00,False
-229251,True,40ml,40ml,RM635.00,RM635.00,False
-220992,True,529,529,RM125.00,RM125.00,False
-223981,True,75ml,75ml,"RM1,170.00","RM1,170.00",False
+186065,True,30ml,30ml,"RM1,050.00",RM840.00,True
+214651,True,102-fair,102 Fair,RM135.00,RM108.00,True
+214652,True,202-light,202 Light,RM135.00,RM108.00,True
+214653,True,203-light,203 Light,RM135.00,RM108.00,True
+214654,True,301-medium,301 Medium,RM135.00,RM108.00,True
+214655,True,302-medium,302 Medium,RM135.00,RM108.00,True
+214656,True,303-medium,303 Medium,RM135.00,RM108.00,True
+214657,True,304-medium,304 Medium,RM135.00,RM108.00,True
+192032,True,50ml,50ml,"RM1,380.00","RM1,104.00",True
+251231,True,default,Default,RM645.00,RM516.00,True
+229251,True,40ml,40ml,RM635.00,RM508.00,True
+220992,True,529,529,RM125.00,RM100.00,True
+223981,True,75ml,75ml,"RM1,170.00",RM936.00,True
 245363,True,15ml,15ml,RM305.00,RM305.00,False
-208572,True,50ml,50ml,RM380.00,RM380.00,False
-226956,True,20g,20g,RM130.00,RM130.00,False
+208572,True,50ml,50ml,RM380.00,RM304.00,True
+226956,True,20g,20g,RM130.00,RM104.00,True
 208582,True,default,Default,RM42.00,RM42.00,False
-208624,True,medium,Medium,RM180.00,RM180.00,False
-192029,True,170ml,170ml,RM470.00,RM470.00,False
-214700,True,250-sand,250 Sand,RM195.00,RM195.00,False
-192030,True,125ml,125ml,RM270.00,RM270.00,False
+208624,True,medium,Medium,RM180.00,RM144.00,True
+192029,True,170ml,170ml,RM470.00,RM376.00,True
+214700,True,250-sand,250 Sand,RM195.00,RM156.00,True
+192030,True,125ml,125ml,RM270.00,RM216.00,True
 210552,True,15ml,15ml,RM300.00,RM300.00,False
-210558,True,150ml,150ml,RM370.00,RM370.00,False
+210558,True,150ml,150ml,RM370.00,RM296.00,True
 199500,True,01-sonoya,01 Sonoya,RM125.00,RM125.00,False
 199501,True,02-chiyoko,02 Chiyoko,RM125.00,RM125.00,False
 245362,True,75ml-729238188600,75ml,RM575.00,RM575.00,False
 245361,True,100ml,100ml,RM205.00,RM205.00,False
-271298,True,default,Default,RM550.00,RM550.00,False
-215892,True,50ml,50ml,RM185.00,RM185.00,False
-268127,True,default,Default,RM293.00,RM293.00,False
+271298,True,default,Default,RM550.00,RM440.00,True
+215892,True,50ml,50ml,RM185.00,RM148.00,True
+268127,True,default,Default,RM293.00,RM234.40,True
 283350,True,1,1,RM189.00,RM189.00,False
 283351,True,2,2,RM189.00,RM189.00,False
 283352,True,3,3,RM189.00,RM189.00,False
@@ -19837,3 +19837,25 @@ variant_id,availability,variant_name,clean_variant_name,display_original_price,d
 285321,True,120ml,120ml,RM84.00,RM84.00,False
 285322,True,95ml,95ml,RM106.00,RM106.00,False
 285317,True,250ml,250ml,RM84.00,RM84.00,False
+233028,True,dusty-rose,Dusty Rose,RM199.00,RM199.00,False
+233030,True,earthy-pink,Earthy Pink,RM199.00,RM199.00,False
+233031,True,pale-petal,Pale Petal,RM199.00,RM199.00,False
+233032,True,raspberry,Raspberry,RM199.00,RM199.00,False
+233029,True,soft-coral,Soft Coral,RM199.00,RM199.00,False
+268054,True,soft-peach,Soft Peach,RM199.00,RM199.00,False
+268053,True,sweet-pink,Sweet Pink,RM199.00,RM199.00,False
+268052,True,watermelon,Watermelon,RM199.00,RM199.00,False
+276395,True,10ml,10ml,RM268.00,RM268.00,False
+269781,True,50ml,50ml,RM660.00,RM660.00,False
+285257,True,50ml,50ml,RM776.00,RM776.00,False
+186637,True,30ml,30ml,RM390.00,RM390.00,False
+284009,True,309-my-dior,309 My DIOR,RM210.00,RM210.00,False
+286239,True,334-dior-blossom,334 DIOR Blossom,RM210.00,RM210.00,False
+284015,True,807-very-dior,807 Very DIOR,RM210.00,RM210.00,False
+284132,True,100ml,100ml,RM170.00,RM170.00,False
+284133,True,001-glazed-pink,001 Glazed Pink,RM215.00,RM215.00,False
+284134,True,017-glossy-jelly,017 Glossy Jelly,RM215.00,RM215.00,False
+285198,True,034-glazed-bubble,034 Glazed Bubble,RM215.00,RM215.00,False
+284025,True,035-glazed-ice,035 Glazed Ice,RM215.00,RM215.00,False
+284026,True,036-glazed-lavender,036 Glazed Lavender,RM215.00,RM215.00,False
+284027,True,041-glazed-rosy,041 Glazed Rosy,RM215.00,RM215.00,False
