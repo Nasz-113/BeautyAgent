@@ -5,6 +5,9 @@ import psycopg2
 import csv
 import requests
 
+import asyncio
+import httpx
+
 # from bs4 import BeautifulSoup
 # from multiprocessing.pool import ThreadPool
 from pathlib import Path
@@ -17,35 +20,25 @@ from db_config import host, user, password, db_name
 lst_404, bad_json = [], []
 
 
-def make_request(url: str, headers: dict) -> requests.Response | None:
-    """Makes GET request and retries several times if unsuccessful.
+async def make_request(
+        client: httpx.AsyncClient,
+        url: str
+) -> httpx.Response | None:
 
-    Args:
-        url: A URL to make a get request
-
-    Returns:
-        Response | None
-    """
-    # proxy = 'YOUR PROXY'
-    # proxies = {"https": proxy}
-
-    # headers = {
-    #     'User-Agent': 'PostmanRuntime/7.54.0',
-    #     'Accept-Language': 'en-MY'
-    # }
-    num_retries = 3
-    success_list = [200, 404]
-    for _ in range(num_retries):
+    for _ in range(3):
         try:
-            resp = requests.get(url, headers=headers) #, proxies=proxies)
-            if resp.status_code in success_list:
-                return resp  # Return response if successful
-        except requests.exceptions.ConnectionError:
+            resp = await client.get(url)
+
+            if resp.status_code in [200, 404]:
+                return resp
+
+        except httpx.RequestError:
             pass
+
     return None
 
 
-def get_all_brand_info(resp) -> list[str]:
+async def get_all_brand_info(client, resp) -> list[str]:
     """Extracts a list of all brand names from an HTML page.
 
     Args:
@@ -64,24 +57,29 @@ def get_all_brand_info(resp) -> list[str]:
     list_data = resp.json()['data']
     # print(resp.json())
     brand_list = []
-    headers = {
-        'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
-        ' AppleWebKit/537.36 '
-        '(KHTML, like Gecko)'
-        ' Chrome/137.0.0.0 Safari/537.36',
+    # headers = {
+    #     'User-Agent':
+    #     'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+    #     ' AppleWebKit/537.36 '
+    #     '(KHTML, like Gecko)'
+    #     ' Chrome/137.0.0.0 Safari/537.36',
 
-        'Accept-Language':'en-MY,en;q=0.9',
-        'Accept':'application/json',
-        'Referer':'https://www.sephora.my/',
-        'Accept-Language': 'en-MY',
-        'x-swa': 'web',
-        'Accept': '*/*',
-        'Connection': 'keep-alive',
-    }
+    #     'Accept-Language':'en-MY,en;q=0.9',
+    #     'Accept':'application/json',
+    #     'Referer':'https://www.sephora.my/',
+    #     'Accept-Language': 'en-MY',
+    #     'x-swa': 'web',
+    #     'Accept': '*/*',
+    #     'Connection': 'keep-alive',
+    # }
     for brand in list_data:
         product_base_url = f'https://www.sephora.my/api/web/v1/variants?filter%5Bbrand%5D={brand['attributes']['slug-url']}&page%5Bnumber%5D=1&page%5Bsize%5D=800'
-        product = make_request(product_base_url,headers).json()
+        resp = await make_request(client, product_base_url)
+
+        if resp is None:
+            continue
+
+        product = resp.json()
         # print(product["transformedData"][0]["id"])
         product_name = []
         for product_data in product["transformedData"]:
@@ -102,82 +100,240 @@ def get_all_brand_info(resp) -> list[str]:
     return brand_list
 
 
-def get_all_product_info(headers: dict, brand_list: list[dict]):
-    """Extracts information about a product from JSON response using the Pydantic model
-    and returns validated dictionary of product information.
+async def get_all_product_info(
+        client: httpx.AsyncClient,
+        brand_list: list[dict]
+):
 
-    Args:
-        url: A URL of the product to be processed
+    product_list = []
+    variant_list = []
+    filter_list = []
+    variant_filter_list = []
+    filter_type_list = []
 
-    Returns:
-        Successful response - a dictionary with processed values,
-        Unsuccessful response - 'None'
-    """
-    product_list, variant_list, filter_list, variant_filter_list, filter_type_list = [], [], [], [], []
-    for brand in brand_list:
-        for product_slug_url in brand["products"]:
-            product_base_url = f'https://www.sephora.my/api/v2.6/products/{product_slug_url}?include=variants.filter_values,variants.ingredient_preference,featured_ad.virtual_bundle.bundle_elements,product_articles,filter_types'
-            product = make_request(product_base_url,headers).json()
+    seen_filter_ids = set()
+    seen_filter_type_ids = set()
+    seen_filter_type_values = set()
+    seen_variant_filters = set()
+
+    excluded_filter_ids = set()
+
+    sem = asyncio.Semaphore(50)
+
+
+    async def process_product(product_slug_url):
+
+        async with sem:
+
+            product_base_url = (
+                f'https://www.sephora.my/api/v2.6/products/'
+                f'{product_slug_url}'
+                '?include=variants.filter_values,'
+                'variants.ingredient_preference,'
+                'featured_ad.virtual_bundle.bundle_elements,'
+                'product_articles,'
+                'filter_types'
+            )
+
+            resp = await make_request(
+                client,
+                product_base_url
+            )
+
+            if resp is None:
+                return None
+
+
+            product = resp.json()
+
+            
             if product.get("errors"):
                 print(f"Problematic Product: {product_slug_url}")
-                continue
-            # print(f"Good to extract data: {product_slug_url}")
-            for data in product["included"]:
-                if data["id"] in [38, 47, 84, 85]:
-                        print(data)
-                if data["type"] == "ingredient-preferences":
-                    filter_type_info = FilterTypeInfo(
-                        filter_type_id = data["id"], 
-                        value = "Ingredients(Product Claim)"
-                        )
-                    if filter_type_info.value not in [x["value"] for x in filter_type_list]:
-                        filter_type_list.append(filter_type_info.model_dump())
-                elif (data["type"] == "filter-types"):
-                    filter_type_info = FilterTypeInfo(
-                        filter_type_id = data["id"], 
-                        value = data.get("attributes", {}).get("name")
-                        )
-                    if filter_type_info.filter_type_id not in [x["filter_type_id"] for x in filter_type_list]:
-                        filter_type_list.append(filter_type_info.model_dump())
-                elif data["type"] == "filter-values" and data.get("attributes", {}).get("filter-type-id") not in [38, 47, 84, 85]:
-                    filter_info = FilterInfo(
-                        filter_id = data["id"], 
-                        value = data.get("attributes", {}).get("value"), 
-                        filter_type_id = data.get("attributes", {}).get("filter-type-id")
-                        )
-                    if filter_info.filter_id not in [x["filter_id"] for x in filter_list]:
-                        filter_list.append(filter_info.model_dump())
-                elif data["type"] == "variants":
-                    variant_info = VariantInfo(
-                        variant_id = data["id"], 
-                        availability = data.get("attributes", {}).get("available", False),
-                        variant_name = data["attributes"]["slug-url"],
-                        clean_variant_name = data["attributes"]["name"],
-                        display_original_price = data["attributes"]["display-original-price"],
-                        display_price = data["attributes"]["display-price"],
-                        under_sale = bool(data["attributes"]["under-sale"])
-                        )
-                    variant_list.append(variant_info.model_dump())
-                    for filter_value in data["relationships"]["filter-values"]["data"]:
-                        variant_filter_list.append(VariantFilter(variant_id= data["id"], filter_id = filter_value["id"]).model_dump())
-                else:
-                    continue
-            
-            product_info = ProductInfo(
-                    product_id = product["data"]["id"],
-                    brand_id = product["data"]["relationships"]["brand"]["data"]["id"],
-                    application = product["data"]["attributes"]["application"],
-                    product_name = product["data"]["attributes"]["slug-url"],
-                    clean_product_name = product["data"]["attributes"]["name"],
-                    description = product["data"]["attributes"]["description"],
-                    display_original_price = product["data"]["attributes"]["display-original-price"],
-                    display_price = product["data"]["attributes"]["display-price"],
-                    additional_benefits = product["data"]["attributes"]["benefits"]
-            )    
-            # print(brand_info)
-            product_list.append(product_info.model_dump())
+                return None
 
-    return product_list, variant_list, filter_list, variant_filter_list, filter_type_list
+
+            return product
+
+
+    tasks = []
+
+    for brand in brand_list:
+        for slug in brand["products"]:
+            tasks.append(
+                process_product(slug)
+            )
+
+
+    for coro in asyncio.as_completed(tasks):
+        try:
+            product = await coro
+        except Exception as e:
+            print(f"Task failed: {e}")
+            continue
+
+        if product is None:
+            continue
+
+
+        for data in product["included"]:
+
+            # if data["id"] in [38,47,84,85] or data["id"] in ["38","47","84","85"]:
+            #     print(data)
+            if data["type"] == "ingredient-preferences":
+
+                filter_type_info = FilterTypeInfo(
+
+                    filter_type_id=data["id"],
+
+                    value="Ingredients(Product Claim)"
+
+                )
+
+
+                if filter_type_info.value not in seen_filter_type_values:
+
+                    filter_type_list.append(
+
+                        filter_type_info.model_dump()
+
+                    )
+
+                    seen_filter_type_values.add(
+
+                        filter_type_info.value
+
+                    )
+
+
+            elif data["type"] == "filter-types":
+
+                filter_type_info = FilterTypeInfo(
+
+                    filter_type_id=data["id"],
+
+                    value=data.get(
+
+                        "attributes",
+
+                        {}
+
+                    ).get(
+
+                        "name"
+
+                    )
+
+                )
+
+
+                if filter_type_info.filter_type_id not in seen_filter_type_ids:
+
+                    filter_type_list.append(
+
+                        filter_type_info.model_dump()
+
+                    )
+
+                    seen_filter_type_ids.add(
+
+                        filter_type_info.filter_type_id
+
+                    )
+
+
+
+
+            elif (data["type"] == "filter-values"):
+
+                filter_type_id = data.get("attributes", {}).get("filter-type-id")
+                if filter_type_id in [38, 47, 84, 85]:
+                    # Track excluded filter IDs so we skip them later
+                    excluded_filter_ids.add(data["id"])
+                    continue  # do NOT add to filter_list
+
+                filter_info = FilterInfo(
+                    filter_id=data["id"],
+                    value=data.get("attributes", {}).get("value"),
+                    filter_type_id=filter_type_id
+                )
+                if filter_info.filter_id not in seen_filter_ids:
+                    filter_list.append(filter_info.model_dump())
+                    seen_filter_ids.add(filter_info.filter_id)
+
+
+            elif data["type"] == "variants":
+
+                variant_info = VariantInfo(
+                    variant_id=data["id"],
+                    availability=data.get("attributes", {}).get("available", False),
+                    variant_name=data["attributes"]["slug-url"],
+                    clean_variant_name=data["attributes"]["name"],
+                    display_original_price=data["attributes"]["display-original-price"],
+                    display_price=data["attributes"]["display-price"],
+                    under_sale=bool(data["attributes"]["under-sale"])
+                )
+                variant_list.append(variant_info.model_dump())
+
+                for filter_value in data["relationships"]["filter-values"]["data"]:
+                    # Skip filters that belong to excluded types
+                    if filter_value["id"] in excluded_filter_ids:
+                        continue
+
+                    key = (data["id"], filter_value["id"])
+                    if key not in seen_variant_filters:
+                        seen_variant_filters.add(key)
+                        variant_filter_list.append(
+                            VariantFilter(
+                                variant_id=data["id"],
+                                filter_id=filter_value["id"]
+                            ).model_dump()
+                        )
+
+
+
+        product_info = ProductInfo(
+
+            product_id=product["data"]["id"],
+
+            brand_id=product["data"]["relationships"]["brand"]["data"]["id"],
+
+            application=product["data"]["attributes"]["application"],
+
+            product_name=product["data"]["attributes"]["slug-url"],
+
+            clean_product_name=product["data"]["attributes"]["name"],
+
+            description=product["data"]["attributes"]["description"],
+
+            display_original_price=product["data"]["attributes"]["display-original-price"],
+
+            display_price=product["data"]["attributes"]["display-price"],
+
+            additional_benefits=product["data"]["attributes"]["benefits"]
+
+        )
+
+
+        product_list.append(
+
+            product_info.model_dump()
+
+        )
+
+
+    return (
+
+        product_list,
+
+        variant_list,
+
+        filter_list,
+
+        variant_filter_list,
+
+        filter_type_list
+
+    )
 
 
 def save_to_csv(all_info: list[dict], table_name: str, unique_key: str) -> None:
@@ -289,105 +445,230 @@ def save_to_db(all_info: list[dict], create_table_statement: str, table_name: st
     print(f'Information has been successfully saved to the "{table_name}" table in PostgreSQL\n')
 
 
-def main():
-    # Get all brand names and put them in one list
-    try:
-        headers = {
+async def main():
+
+    headers = {
         'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
-        ' AppleWebKit/537.36 '
-        '(KHTML, like Gecko)'
-        ' Chrome/137.0.0.0 Safari/537.36',
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+        'AppleWebKit/537.36 '
+        '(KHTML, like Gecko) '
+        'Chrome/137.0.0.0 Safari/537.36',
 
-        'Accept-Language':'en-MY,en;q=0.9',
-        'Accept':'application/json',
-        'Referer':'https://www.sephora.my/',
-        'Accept-Language': 'en-MY',
+        'Accept-Language': 'en-MY,en;q=0.9',
+        'Accept': 'application/json',
+        'Referer': 'https://www.sephora.my/',
         'x-swa': 'web',
-        'Accept': '*/*',
         'Connection': 'keep-alive',
-        }
-        brand_list = get_all_brand_info(make_request('https://www.sephora.my/api/v2.6/brands?page[size]=500', headers))
-    except Exception as e:
-        sys.exit(f'An error occurred while trying to get a list of brand names: {type(e).__name__} - {e}')
+    }
 
-    print(f'Information about {len(brand_list)} brands has been successfully extracted\n')
+    limits = httpx.Limits(
+        max_connections=100,
+        max_keepalive_connections=20
+    )
 
-    # Save info about all brands to csv file and PostgreSQL
-    for brand in brand_list:
-        # 1. Pop 'products' out of the individual brand dictionary safely
-        product_list_temp = brand.pop("products", [])
-        
-        # 2. Save the individual brand (wrapped in a list so your functions still work)
-        save_to_csv([brand], table_name='brand_info', unique_key='brand_id')
-        save_to_db([brand], sql_create_brand_table, table_name='brand_info', conflict_columns=["brand_id"])
-        
-        # 3. Put 'products' back into the brand dictionary
-        brand["products"] = product_list_temp
+    async with httpx.AsyncClient(
+        headers=headers,
+        timeout=30,
+        limits=limits
+    ) as client:
 
-    # Put all product URLs in one generator
-    try:
-        headers = {
-        'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
-        ' AppleWebKit/537.36 '
-        '(KHTML, like Gecko)'
-        ' Chrome/137.0.0.0 Safari/537.36',
+        try:
 
-        'Accept-Language':'en-MY,en;q=0.9',
-        'Accept':'application/json',
-        'Referer':'https://www.sephora.my/',
-        'Accept-Language': 'en-MY',
-        'x-swa': 'web',
-        'Accept': '*/*',
-        'Connection': 'keep-alive',
-        }
-        product_list, variant_list, filter_list, variant_filter_list, filter_type_list = get_all_product_info(headers, brand_list)
-    except Exception as e:
-        print(e)
-        sys.exit(f'An error occurred while trying to get a list of product names: {type(e).__name__} - {e}')
+            resp = await make_request(
+                client,
+                'https://www.sephora.my/api/v2.6/brands?page[size]=500'
+            )
 
-    save_to_csv(product_list, table_name='product_info', unique_key='product_id')
-    save_to_csv(variant_list, table_name='variant_info', unique_key='variant_id')
-    save_to_csv(filter_list, table_name='filter_info', unique_key='filter_id')
-    save_to_csv(filter_type_list, table_name='filter_type_info', unique_key='filter_type_id')
+            if resp is None:
+                raise Exception("Unable to retrieve brands")
+
+            brand_list = await get_all_brand_info(
+                client,
+                resp
+            )
+
+        except Exception as e:
+            sys.exit(
+                f'An error occurred while trying to get a list '
+                f'of brand names: {type(e).__name__} - {e}'
+            )
+
+        print(
+            f'Information about '
+            f'{len(brand_list)} brands has been successfully extracted\n'
+        )
+
+        brands_to_save = []
+        for brand in brand_list:
+            brand_copy = brand.copy()
+            brand_copy.pop("products", None)   # remove products for DB/CSV
+            brands_to_save.append(brand_copy)
+
+
+        save_to_csv(
+            brands_to_save,
+            table_name='brand_info',
+            unique_key='brand_id'
+        )
+
+        save_to_db(
+            brands_to_save,
+            sql_create_brand_table,
+            table_name='brand_info',
+            conflict_columns=['brand_id']
+        )
+
+
+        try:
+
+            (
+                product_list,
+                variant_list,
+                filter_list,
+                variant_filter_list,
+                filter_type_list
+
+            ) = await get_all_product_info(
+
+                client,
+
+                brand_list
+
+            )
+
+
+        except Exception as e:
+
+            sys.exit(
+
+                f'An error occurred while trying '
+                f'to get product data: '
+
+                f'{type(e).__name__} - {e}'
+
+            )
+
+
+    save_to_csv(
+        product_list,
+        table_name='product_info',
+        unique_key='product_id'
+    )
+
+    save_to_csv(
+        variant_list,
+        table_name='variant_info',
+        unique_key='variant_id'
+    )
+
+    save_to_csv(
+        filter_list,
+        table_name='filter_info',
+        unique_key='filter_id'
+    )
+
+    save_to_csv(
+        filter_type_list,
+        table_name='filter_type_info',
+        unique_key='filter_type_id'
+    )
+
 
     prepared_data = []
+
+
     for vf in variant_filter_list:
-        data_dict = vf
-        
-        # Create a unique string identifier for the upsert logic to use
-        data_dict['composite_id'] = f"{data_dict['variant_id']}_{data_dict['filter_id']}"
-        
-        prepared_data.append(data_dict)
-    save_to_csv(prepared_data, table_name='variant_filter_info', unique_key='composite_id')
 
-    save_to_db(filter_type_list, sql_create_filter_type_table, table_name='filter_type_info', conflict_columns=["filter_type_id"])
-    save_to_db(filter_list, sql_create_filter_table, table_name='filter_info', conflict_columns=["filter_id"])
-    save_to_db(product_list, sql_create_product_table, table_name='product_info', conflict_columns=["product_id"])
-    save_to_db(variant_list, sql_create_variant_table, table_name='variant_info', conflict_columns=["variant_id"])
-    save_to_db(variant_filter_list, sql_create_variant_filter_table, table_name='variant_filter_info', conflict_columns=[])
-    # product_urls = (product_base_url.format(prod_id)
-    #                 for brand in brand_list
-    #                 if brand['products'] is not None
-    #                 for prod_id in brand['products'])
+        d = vf.copy()
 
-    # # Get inforamtion about each product
-    # print('Extracting information about products...')
-    # with ThreadPool(10) as pool:
-    #     all_products_info = list(filter(None, pool.map(get_product_info, product_urls)))
+        d['composite_id'] = (
 
-    # print(f'''Extracting product information was completed successfully.
-    # Details about the extraction process:
-    # - 404 Errors: {len(lst_404)}
-    #   Product IDs: {lst_404}
-    # - Bad JSON or requiring repeated requests: {len(bad_json)}
-    #   Product IDs: {bad_json}\n''')
+            f"{d['variant_id']}_"
 
-    # # Save info about all products to csv file and PostgreSQL
-    # save_to_csv(all_products_info, table_name='product_info')
-    # save_to_db(all_products_info, sql_create_product_table, table_name='product_info')
+            f"{d['filter_id']}"
+
+        )
+
+        prepared_data.append(d)
+
+
+
+    save_to_csv(
+
+        prepared_data,
+
+        table_name='variant_filter_info',
+
+        unique_key='composite_id'
+
+    )
+
+
+
+    save_to_db(
+
+        filter_type_list,
+
+        sql_create_filter_type_table,
+
+        table_name='filter_type_info',
+
+        conflict_columns=['filter_type_id']
+
+    )
+
+
+    save_to_db(
+
+        filter_list,
+
+        sql_create_filter_table,
+
+        table_name='filter_info',
+
+        conflict_columns=['filter_id']
+
+    )
+
+
+    save_to_db(
+
+        product_list,
+
+        sql_create_product_table,
+
+        table_name='product_info',
+
+        conflict_columns=['product_id']
+
+    )
+
+
+    save_to_db(
+
+        variant_list,
+
+        sql_create_variant_table,
+
+        table_name='variant_info',
+
+        conflict_columns=['variant_id']
+
+    )
+
+
+    save_to_db(
+
+        variant_filter_list,
+
+        sql_create_variant_filter_table,
+
+        table_name='variant_filter_info',
+
+        conflict_columns=["variant_id", "filter_id"]
+
+    )
 
 
 if __name__ == '__main__':
-    main()
+    asyncio.run(main())

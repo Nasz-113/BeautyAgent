@@ -3,7 +3,7 @@ filter_id,value,filter_type_id
 488,Alcohol-free,37
 684,Dry,41
 685,Normal,41
-714,Mini,38
+714,Oily,41
 686,Oily,41
 504,Value Set,38
 585,Matte,46
@@ -24,7 +24,7 @@ filter_id,value,filter_type_id
 493,Hyaluronic Acid,37
 533,Waterproof,42
 577,Nude,47
-578,Pink,47
+578,Uneven Skin Texture,49
 573,Pencil,36
 568,Red,47
 563,Brown,47
@@ -38,7 +38,7 @@ filter_id,value,filter_type_id
 712,Sheer,46
 587,Shimmer,46
 496,Natural/Organic,37
-618,Tinted,47
+618,Peptides,37
 499,Peptides,37
 855,Silicone-free,37
 570,Cream To Powder,36
@@ -229,7 +229,7 @@ filter_id,value,filter_type_id
 593,Taupe,47
 832,Thinning,45
 557,Straight & Sleek,46
-924,SPF over 30,85
+924,Anti-oxidants,37
 509,Warm & Spicy,39
 510,Earthy & Woody,39
 521,Gift Sets,40
