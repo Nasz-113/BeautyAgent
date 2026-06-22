@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS {}(
     clean_variant_name text,
     display_original_price text,
     display_price text,
-    under_sale boolean default true);
+    under_sale boolean default true,
+    product_id int references product_info(product_id));
 """
 
 sql_create_filter_type_table = """

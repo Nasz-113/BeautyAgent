@@ -270,7 +270,8 @@ async def get_all_product_info(
                     clean_variant_name=data["attributes"]["name"],
                     display_original_price=data["attributes"]["display-original-price"],
                     display_price=data["attributes"]["display-price"],
-                    under_sale=bool(data["attributes"]["under-sale"])
+                    under_sale=bool(data["attributes"]["under-sale"]),
+                    product_id=product["data"]["id"]
                 )
                 variant_list.append(variant_info.model_dump())
 

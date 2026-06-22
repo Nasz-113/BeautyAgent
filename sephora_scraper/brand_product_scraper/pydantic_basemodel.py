@@ -85,6 +85,7 @@ class VariantInfo(BaseModel):
     display_original_price: str | None
     display_price: str | None
     under_sale: StrictBool
+    product_id: int | None
     # NEED CONTINUATION
 
 class ProductInfo(BaseModel):
