@@ -1,5 +1,5 @@
 from langgraph.graph import StateGraph, START, END
-from model.GraphState import BeautyState
+from model.BeautyState import BeautyState
 
 builder = StateGraph(BeautyState)
 
